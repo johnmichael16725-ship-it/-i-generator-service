@@ -1,12 +1,16 @@
 name: Generate Invoice PDF
 
-# Is workflow ko manually chalane ke liye
 on:
   workflow_dispatch:
 
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
+
+    # YEH NAYA SECTION ADD KAREIN
+    permissions:
+      contents: write # Is job ko contents (files) likhne ki ijazat do
+
     steps:
       # Step 1: Apni repository ka code download karna
       - name: Checkout repository
