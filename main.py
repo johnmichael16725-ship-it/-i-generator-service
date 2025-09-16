@@ -2,7 +2,6 @@ import json
 from fpdf import FPDF
 import os
 
-# --- PDF Class (No changes needed here) ---
 class PDF(FPDF):
     def header(self):
         self.set_font('helvetica', 'B', 20)
@@ -14,7 +13,6 @@ class PDF(FPDF):
         self.set_font('helvetica', 'I', 8)
         self.cell(0, 10, f'Page {self.page_no()}', 0, 0, 'C')
 
-# --- create_invoice function (Updated to be safer with .get()) ---
 def create_invoice(invoice_data):
     pdf = PDF()
     pdf.add_page()
@@ -76,29 +74,22 @@ def create_invoice(invoice_data):
     pdf.output(file_name)
     print(f"Successfully created {file_name}")
 
-# --- Main execution block (This is where the main change is) ---
 if __name__ == "__main__":
-    # This script will now read data sent from the frontend via the GitHub Action trigger
-    
     event_path = os.getenv('GITHUB_EVENT_PATH')
-    
     if not event_path:
-        print("Error: GITHUB_EVENT_PATH not found. This script must be run from a GitHub Action.")
+        print("Error: This script must be run from a GitHub Action.")
         exit(1)
         
     try:
         with open(event_path, 'r') as f:
             event_data = json.load(f)
         
-        # The data sent from the Netlify function is inside 'client_payload'
         invoice_data_from_frontend = event_data.get('client_payload', {}).get('invoice_data', {})
-
         if not invoice_data_from_frontend:
             raise ValueError("No invoice data found in the event payload.")
 
-    except (FileNotFoundError, ValueError, json.JSONDecodeError) as e:
+    except Exception as e:
         print(f"Error reading or parsing event data: {e}")
         exit(1)
 
-    # Call the function to create the PDF with the data from the frontend
     create_invoice(invoice_data_from_frontend)
