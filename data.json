@@ -1,0 +1,20 @@
+{
+    "company_name": "Your Dispatching Service",
+    "company_address": "123 Main St, Your City, Your State",
+    "client_name": "TQL Logistics",
+    "client_address": "456 Broker Ave, Cincinnati, OH",
+    "invoice_number": "INV-2024-001",
+    "invoice_date": "May 22, 2024",
+    "items": [
+        {
+            "description": "Freight dispatch service for Load #12345 (CA to TX)",
+            "amount": 1500.00
+        },
+        {
+            "description": "Lumper fee reimbursement",
+            "amount": 150.00
+        }
+    ],
+    "total": 1650.00,
+    "notes": "Thank you for your business. Payment is due within 30 days."
+}
